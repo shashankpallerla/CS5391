@@ -1,6 +1,6 @@
 <?php
 
-class flights_model extends MY_Model
+class Flights_model extends MY_Model
 {
     public $table = 'flights';
     public $primary_key = 'id';

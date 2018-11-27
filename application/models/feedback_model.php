@@ -1,6 +1,6 @@
 <?php
 
-class feedback_model extends MY_Model
+class Feedback_model extends MY_Model
 {
     public $table = 'feedback';
     public $primary_key = 'id';
