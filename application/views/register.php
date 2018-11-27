@@ -5,8 +5,16 @@
     <br>
     <h1>Register</h1>
 
-        <?php if(strlen($this->session->flashdata('message')) > 0) { ?>
-            <?php echo $this->session->flashdata('message'); ?>
+        <?php if(strlen($this->session->flashdata('errors')) > 0) { ?>
+            <div class="alert alert-danger" role="alert">
+                <?php echo $this->session->flashdata('errors'); ?>
+            </div>
+        <?php } ?>
+
+        <?php if(strlen($this->session->flashdata('messages')) > 0) { ?>
+            <div class="alert alert-success" role="alert">
+                <?php echo $this->session->flashdata('messages'); ?>
+            </div>
         <?php } ?>
 
     <?php echo form_open("home/register");?>

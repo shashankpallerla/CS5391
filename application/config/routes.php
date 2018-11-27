@@ -55,3 +55,11 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = "Home/login";
 $route['register'] = "Home/register";
+$route['logout'] = "Home/logout";
+$route['dashboard'] = "Dashboard/index";
+$route['flights'] = "Home/flights";
+$route['hotels'] = "Home/hotels";
+$route['bookflight'] = "Home/bookflight";
+$route['payment'] = "Home/payment";
+$route['feedback'] = "Home/feedback";
+$route['flightstatus'] = "Home/flightstatus";
