@@ -5,8 +5,8 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <h4>Feedback</h4>
+        <div class="col-md-6">
+            <h4>Flight Status</h4>
             <?php if(strlen($this->session->flashdata('errors')) > 0) { ?>
                 <div class="alert alert-danger" role="alert">
                     <?php echo $this->session->flashdata('errors'); ?>

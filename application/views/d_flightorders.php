@@ -7,7 +7,7 @@
         <div class="col-md-3">
             <?php include("d_menu.php"); ?>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="row">
                 <?php if(isset($orders) && count($orders) > 0){ ?>
 
@@ -15,40 +15,24 @@
                             <thead>
                             <tr>
                                 <td>Order No</td>
-                                <td>Departure</td>
-                                <td>Arrival</td>
-                                <td>Airline</td>
+                                <td>Departure Flight</td>
+                                <td>Arrival Flight</td>
+                                <td>Miles</td>
                                 <td>Amount</td>
-                                <td>#</td>
+                                <td>Status</td>
                             </tr>
                             </thead>
                             <tbody>
                             <?php foreach($orders as $order): ?>
                                 <tr>
                                     <td><?php echo $order['id'] ?> </td>
-                                    <td><?php echo $flight['departure'] ?> </td>
-                                    <td><?php echo $flight['arrival'] ?> </td>
-                                    <td><?php echo $flight['airline'] ?> </td>
-                                    <td><?php echo $flight['twoway'] ?> USD</td>
-                                    <td>
-
-                                        <form method="post" action="<?php echo base_url(); ?>bookflight">
-                                            <input type="hidden" name="source" value="<?php echo $_GET['source']; ?>">
-                                            <input type="hidden" name="destination" value="<?php echo $_GET['destination']; ?>">
-                                            <input type="hidden" name="dep_date" value="<?php echo $_GET['dep_date']; ?>">
-                                            <input type="hidden" name="return_date" value="<?php echo $_GET['return_date']; ?>">
-                                            <input type="hidden" name="travelers" value="<?php echo $_GET['travelers']; ?>">
-                                            <input type="hidden" name="type" value="<?php echo $_GET['type']; ?>">
-                                            <?php if($_GET['type'] == 'dep'){ ?>
-                                                <input type="hidden" name="departure_flight" value="<?php echo $flight['id']; ?>">
-                                            <?php }else{ ?>
-                                                <input type="hidden" name="return_flight" value="<?php echo $flight['id']; ?>">
-                                            <?php } ?>
-                                            <input type="submit" value="Select" class="btn btn-success">
-                                        </form>
-
-
-                                    </td>
+                                    <td><?php echo $order['departure_flight_details']['source']->code; ?> --> <?php echo $order['departure_flight_details']['destination']->code; ?>
+                                     (<?php echo $order['departure_flight_details']['airline']; ?>)</td>
+                                    <td><?php echo $order['return_flight_details']['source']->code; ?> --> <?php echo $order['return_flight_details']['destination']->code; ?>
+                                        (<?php echo $order['return_flight_details']['airline']; ?>) </td>
+                                    <td><?php echo $order['totalmiles'] ?> </td>
+                                    <td><?php echo $order['totalamount'] ?> USD</td>
+                                    <td><?php echo $order['status'] ?> </td>
                                 </tr>
 
                             <? endforeach; ?>

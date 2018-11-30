@@ -87,6 +87,11 @@ class Home extends CI_Controller {
 
         $inputs = $this->input->post();
 
+        if(!$this->ion_auth->logged_in()){
+            $this->session->set_flashdata('errors', 'Please login to book flights!');
+            redirect('login','refresh');
+        }
+
         if($inputs['type'] == 'dep'){
             $this->session->set_userdata('departure_flight', $inputs['departure_flight']);
             $getData = $inputs;

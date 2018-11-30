@@ -13,8 +13,10 @@ class Dashboard extends CI_Controller {
 
     public function index()
     {
+        $data['user'] = $this->ion_auth->user()->row();
+
         $this->load->view('include/header');
-        $this->load->view('d_main');
+        $this->load->view('d_main',$data);
         $this->load->view('include/footer');
     }
 
@@ -33,6 +35,9 @@ class Dashboard extends CI_Controller {
             $orderDetails[$key]['return_flight_details'] = $this->flights_model->with_source()->with_destination()->as_array()->get($value['return_flight']);
 
         }
+
+//        echo "<pre>"; print_r($orderDetails); exit;
+
         $data['orders'] = $orderDetails;
         $this->load->view('include/header');
         $this->load->view('d_flightorders',$data);
