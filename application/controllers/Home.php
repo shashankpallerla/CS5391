@@ -131,12 +131,19 @@ class Home extends CI_Controller {
         $this->load->model('flightorders_model');
         $this->load->model('users_model');
         $user = $this->ion_auth->user()->row();
+//        print_r($user); exit;
 
-        if(isset($_POST['success'])){
-//            print_r($_POST); exit;
+        if(isset($_POST['success']) && $_POST['type'] == 'flight'){
             $this->flightorders_model->update(array('status' => 'Confirmed'),$this->input->post('orderId'));
             $orderDetails = $this->flightorders_model->as_array()->get($this->input->post('orderId'));
             $this->users_model->update(array('miles' => $user->miles + $orderDetails['totalmiles']),$user->id);
+            redirect('dashboard','refresh');
+        }
+
+        if(isset($_POST['redeem']) && $_POST['type'] == 'flight'){
+            $this->flightorders_model->update(array('status' => 'Confirmed'),$this->input->post('orderId'));
+            $orderDetails = $this->flightorders_model->as_array()->get($this->input->post('orderId'));
+            $this->users_model->update(array('miles' => $user->miles - INTERNATIONAL_MILEAGE_REDEEM),$user->id);
             redirect('dashboard','refresh');
         }
 
@@ -179,14 +186,14 @@ class Home extends CI_Controller {
             redirect('dashboard','refresh');
         }
 
-        $this->form_validation->set_rules('email','Email', 'required');
+        $this->form_validation->set_rules('username','username', 'required');
         $this->form_validation->set_rules('password','Password ', 'required');
 
         if ($this->form_validation->run() === TRUE)
         {
             $remember = false;
 
-            if ($this->ion_auth->login($this->input->post('email'), $this->input->post('password'), $remember))
+            if ($this->ion_auth->login($this->input->post('username'), $this->input->post('password'), $remember))
             {
               redirect('dashboard','refresh');
             }
@@ -208,22 +215,44 @@ class Home extends CI_Controller {
 //        $this->load->library('form_validation');
 
         $this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
+        $this->form_validation->set_rules('middle_name', 'Middle Name', 'trim');
         $this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
-        $this->form_validation->set_rules('email','Email', 'trim|required|valid_email|is_unique[users.email]');
+        $this->form_validation->set_rules('email','Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('username','Username', 'trim|required|is_unique[users.username]');
         $this->form_validation->set_rules('phone', 'Phone', 'trim');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[cpassword]');
         $this->form_validation->set_rules('cpassword', 'Confirm Password', 'required');
+        $this->form_validation->set_rules('address', 'Address', 'trim');
+        $this->form_validation->set_rules('city', 'City', 'trim');
+        $this->form_validation->set_rules('state', 'State', 'trim');
+        $this->form_validation->set_rules('country', 'Country', 'trim');
+        $this->form_validation->set_rules('zipcode', 'Zipcode', 'trim');
+        $this->form_validation->set_rules('cardno', 'Card No', 'trim');
+        $this->form_validation->set_rules('expirymonth', 'Expiry Month', 'trim');
+        $this->form_validation->set_rules('expiryyear', 'Expiry Year', 'trim');
+        $this->form_validation->set_rules('cvv', 'cvv', 'trim');
+
 
         if ($this->form_validation->run() === TRUE)
         {
             $email = strtolower($this->input->post('email'));
-            $identity = $email;
+            $identity = $this->input->post('username');
             $password = $this->input->post('password');
 
             $additional_data = array(
                 'first_name' => $this->input->post('first_name'),
+                'middle_name' => $this->input->post('middle_name'),
                 'last_name' => $this->input->post('last_name'),
                 'phone' => $this->input->post('phone'),
+                'address' => $this->input->post('address'),
+                'city' => $this->input->post('city'),
+                'state' => $this->input->post('state'),
+                'country' => $this->input->post('country'),
+                'zipcode' => $this->input->post('zipcode'),
+                'cardno' => $this->input->post('cardno'),
+                'expmonth' => $this->input->post('expirymonth'),
+                'expyear' => $this->input->post('expiryyear'),
+                'cvv' => $this->input->post('cvv'),
             );
 
             if($this->ion_auth->register($identity, $password, $email, $additional_data)){

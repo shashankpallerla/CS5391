@@ -56,28 +56,45 @@
                      <div class="col-md-6">
                          <div class="form-group">
                              <label for="exampleFormControlInput1">Credit Card No</label>
-                             <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Credit Card No">
+                             <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Credit Card No" value="<?php echo $userData->cardno;?>">
                          </div>
                      </div>
                      <div class="col-md-2">
                          <div class="form-group">
-                             <label for="exampleFormControlInput1">Expiry Date</label>
-                             <input type="date" class="form-control" id="exampleFormControlInput1">
+                             <label for="exampleFormControlInput1">Expiry Month</label>
+                             <select name="cardmonth" class="custom-select">
+                                 <?php for($i = 01;$i < 12; $i++){ ?>
+                                     <option value="<?php echo $i; ?>" <?php if($userData->expmonth == $i){ echo "selected";} ?>><?=$i;?></option>
+                                 <?php } ?>
+                             </select>
+                         </div>
+                     </div>
+                     <div class="col-md-2">
+                         <div class="form-group">
+                             <label for="exampleFormControlInput1">Expiry Year</label>
+                             <select name="cardyear" class="custom-select">
+                                 <?php for($i = 2018;$i < 2030; $i++){ ?>
+                                     <option value="<?php echo $i; ?>" <?php if($userData->expyear == $i){ echo "selected";} ?>><?=$i;?></option>
+                                 <?php } ?>
+                             </select>
                          </div>
                      </div>
                      <div class="col-md-2">
                          <div class="form-group">
                              <label for="exampleFormControlInput1">CVV</label>
-                             <input type="number" class="form-control" id="exampleFormControlInput1">
+                             <input type="number" class="form-control" id="exampleFormControlInput1" value="<?php echo $userData->cvv;?>">
                          </div>
                      </div>
-                        <input name="success" type="hidden">
                         <input name="orderId" type="hidden" value="<?php echo $orderId; ?>">
                         <input name="type" type="hidden" value="<?php echo $type; ?>">
 
-                     <input type="submit" class="btn btn-success" value="Confirm Order">
+                     <input type="submit" class="btn btn-success" name="success" value="Confirm Order">
 
-                     <input type="submit" class="btn btn-success" value="Redeem Mileage">
+                     <?php if($userData->miles >= INTERNATIONAL_MILEAGE_REDEEM){ ?>
+
+                     <input type="submit" class="btn btn-success" name="redeem" value="Redeem Mileage">
+
+                     <?php } ?>
                  </form>
 
              </div>

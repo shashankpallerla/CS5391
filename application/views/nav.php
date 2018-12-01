@@ -35,7 +35,7 @@
         </ul>
         <?php if($this->ion_auth->logged_in() == FALSE){ ?>
         <form class="form-inline my-2 my-lg-0" method="POST" action="<?php echo base_url();?>login">
-            <input class="form-control mr-sm-2" type="text" placeholder="Email" aria-label="Email" name="email">
+            <input class="form-control mr-sm-2" type="text" placeholder="Username" aria-label="Username" name="username">
             <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Password" name="password">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
         </form>

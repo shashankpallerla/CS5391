@@ -20,9 +20,9 @@
         <?php echo form_open("home/login");?>
 
         <div class="form-group row">
-            <label for="email" class="col-4 col-form-label">Email</label>
+            <label for="email" class="col-4 col-form-label">Username</label>
             <div class="col-8">
-                <input id="email" name="email" type="text" required="required" class="form-control here">
+                <input id="username" name="username" type="text" required="required" class="form-control here">
             </div>
         </div>
         <div class="form-group row">
