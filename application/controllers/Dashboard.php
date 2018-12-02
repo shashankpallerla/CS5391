@@ -44,4 +44,27 @@ class Dashboard extends CI_Controller {
         $this->load->view('include/footer');
     }
 
+    public function hotelorders()
+    {
+        $user = $this->ion_auth->user()->row();
+        $data = array();
+
+        $this->load->model('hotelorders_model');
+        $this->load->model('hotels_model');
+        $orderDetails = $this->hotelorders_model->as_array()->where('userid',$user->id)->get_all();
+
+
+        foreach ($orderDetails as $key => $value){
+            $orderDetails[$key]['hotelDetails'] = $this->hotels_model->as_array()->get($value['hotel_id']);
+        }
+
+//        echo "<pre>"; print_r($orderDetails); exit;
+
+
+        $data['orders'] = $orderDetails;
+        $this->load->view('include/header');
+        $this->load->view('d_hotelorders',$data);
+        $this->load->view('include/footer');
+    }
+
 }

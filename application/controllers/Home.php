@@ -13,8 +13,10 @@ class Home extends CI_Controller {
     {
 
         $this->load->model('airports_model');
+        $this->load->model('hoteldestinations_model');
 
         $data['codes'] = $this->airports_model->as_array()->get_all();
+        $data['hotelcodes'] = $this->hoteldestinations_model->as_array()->get_all();
 
 //        print_r($data); exit;
 
@@ -22,6 +24,104 @@ class Home extends CI_Controller {
         $this->load->view('include/header');
         $this->load->view('home',$data);
         $this->load->view('include/footer');
+    }
+
+    public function hotels(){
+        $this->load->model('hotels_model');
+        $this->load->model('hoteldestinations_model');
+
+        $data = array();
+
+        $data['hotelcodes'] = $this->hoteldestinations_model->as_array()->get_all();
+
+        if($this->input->get()){
+
+            $inputs = $this->input->get();
+            $this->form_validation->set_data($inputs);
+
+            $this->form_validation->set_rules('destination','Destination ', 'required');
+            $this->form_validation->set_rules('checkin_date','Checkin Date ', 'required');
+            $this->form_validation->set_rules('checkout_date','Checkout Date ', 'required');
+            $this->form_validation->set_rules('no_people','No of People', 'required');
+            $this->form_validation->set_rules('no_rooms','No of Rooms', 'required');
+
+            if ($this->form_validation->run() === TRUE){
+
+
+                $start = strtotime($inputs['checkin_date']);
+                $end = strtotime($inputs['checkout_date']);
+                $start = date( "Y-m-d", $start);
+                $end =  date( "Y-m-d", $end);
+
+                $query = $this->db->query("SELECT * FROM hotels WHERE destination = '".$inputs['destination']."'");
+                $data['hotels'] = $query->result_array();
+
+
+//                echo $this->db->last_query();
+
+//                echo "<pre>"; print_r($data); exit;
+
+
+            }else{
+                $data['errors'] = validation_errors();
+
+            }
+
+        }
+
+        $this->load->view('include/header');
+        $this->load->view('hotels',$data);
+        $this->load->view('include/footer');
+
+    }
+
+    public function bookhotel(){
+
+        $inputs = $this->input->post();
+
+
+        if(!$this->ion_auth->logged_in()){
+            $this->session->set_flashdata('errors', 'Please login to book Hotels!');
+            redirect('login','refresh');
+        }
+
+
+//        print_r($inputs); exit;
+
+        if(isset($inputs['hotelid'])){
+            $user = $this->ion_auth->user()->row();
+            $this->load->model('hotelorders_model');
+            $this->load->model('hotels_model');
+
+            $hotelDetails = $this->hotels_model->get($inputs['hotelid']);
+
+//            echo "<pre>"; print_r($hotelDetails); exit;
+
+            $amount = $inputs['no_rooms'] * $hotelDetails->cost;
+            $fee = $amount * HOTELS_FEE;
+            $totalamount = $amount + $fee;
+
+            $insert = array(
+                'hotel_id' => $inputs['hotelid'],
+                'userid' => $user->id,
+                'no_rooms' => $inputs['no_rooms'],
+                'no_people' => $inputs['no_people'],
+                'amount' => $amount,
+                'fee' => $fee,
+                'totalamount' => $totalamount,
+                'checkin_date' => $inputs['checkin_date'],
+                'checkout_date' => $inputs['checkout_date'],
+                'status' => HOTELS_STATUS1
+            );
+
+            $id = $this->hotelorders_model->insert($insert);
+            $url = base_url('payment')."?type=hotel&orderId=".$id;
+            redirect($url,'refresh');
+
+        }else{
+            redirect('Home','refresh');
+        }
+
     }
 
     public function flights(){
@@ -68,13 +168,8 @@ class Home extends CI_Controller {
 
 
             }else{
-                echo validation_errors();
-
+                $data['errors'] = validation_errors();
             }
-
-        }else{
-
-
 
         }
 
@@ -130,8 +225,9 @@ class Home extends CI_Controller {
     public function payment(){
         $this->load->model('flightorders_model');
         $this->load->model('users_model');
+        $this->load->model('hotelorders_model');
+        $this->load->model('hotels_model');
         $user = $this->ion_auth->user()->row();
-//        print_r($user); exit;
 
         if(isset($_POST['success']) && $_POST['type'] == 'flight'){
             $this->flightorders_model->update(array('status' => 'Confirmed'),$this->input->post('orderId'));
@@ -147,13 +243,16 @@ class Home extends CI_Controller {
             redirect('dashboard','refresh');
         }
 
+        if(isset($_POST['success']) && $_POST['type'] == 'hotel'){
+            $this->hotelorders_model->update(array('status' => 'Confirmed'),$this->input->post('orderId'));
+            redirect('dashboard/hotelorders','refresh');
+        }
+
         $id = $_GET['orderId'];
         $type = $_GET['type'];
 
         $data = array();
         if($type == 'flight'){
-            $this->load->model('flightorders_model');
-            $this->load->model('flights_model');
             $orderDetails = $this->flightorders_model->as_array()->get($id);
 
             $data['depFlight'] = $this->flights_model->with_source()->with_destination()->as_array()->get($orderDetails['departure_flight']);
@@ -169,6 +268,21 @@ class Home extends CI_Controller {
             $this->flightorders_model->update(array('totalmiles' => $data['totalMiles'], 'totalamount' => $data['total']),$this->input->post('orderId'));
 
 //          echo "<pre>"; print_r($data); exit;
+
+        }else if($type == 'hotel'){
+
+            $orderDetails = $this->hotelorders_model->as_array()->get($id);
+
+//            echo "<pre>"; print_r($orderDetails); exit;
+
+            $data['userData'] = $user;
+            $data['orderId'] = $id;
+            $data['type'] = $type;
+            $data['orderDetails'] = $orderDetails;
+            $data['hotelDetails'] = $this->hotels_model->as_array()->get($orderDetails['hotel_id']);
+
+
+//            echo "<pre>"; print_r($data); exit;
 
         }
 

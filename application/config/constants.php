@@ -87,3 +87,5 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 define('INTERNATIONAL_MILEAGE_REDEEM', 50000);
 define('DOMESTIC_MILEAGE_REDEEM', 25000);
+define('HOTELS_STATUS1', 'processing');
+define('HOTELS_FEE', 0.15);

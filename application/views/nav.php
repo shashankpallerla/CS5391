@@ -15,18 +15,18 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url(); ?>hotels">Hotels</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url(); ?>deals">Deals</a>
-            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="--><?php //echo base_url(); ?><!--deals">Deals</a>-->
+<!--            </li>-->
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url(); ?>feedback">Feedback</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url(); ?>flightstatus">Check Flight status</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url(); ?>contact">Contact Us</a>
-            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="--><?php //echo base_url(); ?><!--contact">Contact Us</a>-->
+<!--            </li>-->
             <?php if($this->ion_auth->logged_in() == FALSE){ ?>
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url(); ?>register">Register</a>

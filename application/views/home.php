@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="col-md-2 mb-3">
                                     <label for="validationCustom05">No of Travelers</label>
-                                    <input type="number" class="form-control" id="validationCustom05" name="travelers" required>
+                                    <input type="number" class="form-control" id="validationCustom05" name="travelers" value="1" required>
                                 </div>
                             </div>
                             <input type="hidden" name="type" value="dep">
@@ -67,10 +67,47 @@
                         </form>
 
                     </div>
-                    <div class="tab-pane fade" id="hotels" role="tabpanel" aria-labelledby="hotels-tab">
+                    <div class="tab-pane fade" id="hotels" role="tabpanel" aria-labelledby="hotels-tab" style="padding-top: 15px;">
+
+                        <!--Hotels-->
+                        <form class="needs-validation" method="get" action="<?php echo base_url(); ?>hotels">
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Destination</label>
+                                    <select class="form-control" id="destination" name="destination">
+                                        <option>Select</option>
+                                        <?php foreach($hotelcodes as $code): ?>
+                                            <option value="<?php echo $code['id']; ?>"><?php echo $code['name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                        <label for="validationCustom03">Checkin Date</label>
+                                        <input type="date" class="form-control" id="validationCustom03" name="checkin_date" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                        <label for="validationCustom04">Checkout Date</label>
+                                        <input type="date" class="form-control" id="validationCustom04" name="checkout_date" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationCustom05">No of Rooms</label>
+                                    <input type="number" class="form-control" id="validationCustom05" name="no_rooms" value="1" required>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationCustom05">No of People</label>
+                                    <input type="number" class="form-control" id="validationCustom05" name="no_people" value="2" required>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Search Hotels</button>
+                        </form>
+
 
                     </div>
-                    <div class="tab-pane fade" id="deals" role="tabpanel" aria-labelledby="deals-tab">
+                    <div class="tab-pane fade" id="deals" role="tabpanel" aria-labelledby="deals-tab" style="padding-top: 15px;">
 
                     </div>
                 </div>

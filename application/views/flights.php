@@ -7,6 +7,13 @@
     <div class="row">
         <div class="col-md-12">
 
+            <?php if(isset($errors) && strlen($errors) > 0) { ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php echo $errors; ?>
+                </div>
+            <?php } ?>
+
+
             <form class="needs-validation" method="get" action="<?php echo base_url(); ?>flights">
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
