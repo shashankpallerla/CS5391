@@ -15,9 +15,9 @@
             <li class="nav-item <?php if($this->uri->segment('1') == 'hotels'){ echo "active"; } ?>">
                 <a class="nav-link" href="<?php echo base_url(); ?>hotels">Hotels</a>
             </li>
-<!--            <li class="nav-item <?php if($this->uri->segment('1') == 'deals'){ echo "active"; } ?>">-->
-<!--                <a class="nav-link" href="--><?php //echo base_url(); ?><!--deals">Deals</a>-->
-<!--            </li>-->
+            <li class="nav-item <?php if($this->uri->segment('1') == 'deals'){ echo "active"; } ?>">
+                <a class="nav-link" href="<?php echo base_url(); ?>deals">Deals</a>
+            </li>
             <li class="nav-item <?php if($this->uri->segment('1') == 'feedback'){ echo "active"; } ?>">
                 <a class="nav-link" href="<?php echo base_url(); ?>feedback">Feedback</a>
             </li>

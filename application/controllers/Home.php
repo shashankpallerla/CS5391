@@ -132,6 +132,55 @@ class Home extends CI_Controller {
 
     }
 
+    public function deals(){
+        $this->load->model('hotels_model');
+        $this->load->model('hoteldestinations_model');
+
+        $data = array();
+
+        $data['hotelcodes'] = $this->hoteldestinations_model->as_array()->get_all();
+
+        if($this->input->get()){
+
+            $inputs = $this->input->get();
+            $this->form_validation->set_data($inputs);
+
+            $this->form_validation->set_rules('destination','Destination ', 'required');
+            $this->form_validation->set_rules('checkin_date','Checkin Date ', 'required');
+            $this->form_validation->set_rules('checkout_date','Checkout Date ', 'required');
+            $this->form_validation->set_rules('no_people','No of People', 'required');
+            $this->form_validation->set_rules('no_rooms','No of Rooms', 'required');
+
+            if ($this->form_validation->run() === TRUE){
+
+
+                $start = strtotime($inputs['checkin_date']);
+                $end = strtotime($inputs['checkout_date']);
+                $start = date( "Y-m-d", $start);
+                $end =  date( "Y-m-d", $end);
+
+                $query = $this->db->query("SELECT * FROM hotels WHERE destination = '".$inputs['destination']."'");
+                $data['hotels'] = $query->result_array();
+
+
+//                echo $this->db->last_query();
+
+//                echo "<pre>"; print_r($data); exit;
+
+
+            }else{
+                $data['errors'] = validation_errors();
+
+            }
+
+        }
+
+        $this->load->view('include/header');
+        $this->load->view('hotels',$data);
+        $this->load->view('include/footer');
+
+    }
+
     public function flights(){
         $this->load->model('flights_model');
         $this->load->model('airports_model');
@@ -321,21 +370,24 @@ class Home extends CI_Controller {
         if($type == 'flight'){
             $orderDetails = $this->flightorders_model->as_array()->get($id);
 
+//                      echo "<pre>"; print_r($orderDetails); exit;
+
+
             $data['depFlight'] = $this->flights_model->with_source()->with_destination()->as_array()->get($orderDetails['departure_flight']);
             $data['retFlight'] = $this->flights_model->with_source()->with_destination()->as_array()->get($orderDetails['return_flight']);
             $data['travelers'] = $orderDetails['travelers'];
-            $total = $data['depFlight']['twoway'];
+            $total = $data['depFlight']['twoway'] * $orderDetails['travelers'];
             $data['amount'] =  $total;
             $data['fee'] = ($total / 100) * 15;
             $data['total'] =  $total + (($total / 100) * 15);
-            $data['totalMiles'] = $data['depFlight']['miles'] + $data['retFlight']['miles'];
+            $data['totalMiles'] = ($data['depFlight']['miles'] + $data['retFlight']['miles']) * $orderDetails['travelers'];
             $data['userData'] = $user;
             $data['orderId'] = $id;
             $data['type'] = $type;
 
-            $this->flightorders_model->update(array('totalmiles' => $data['totalMiles'], 'totalamount' => $data['total']),$this->input->post('orderId'));
 
-//          echo "<pre>"; print_r($data); exit;
+            $this->flightorders_model->update(array('totalmiles' => $data['totalMiles'], 'totalamount' => $data['total']),$this->input->get('orderId'));
+
 
         }else if($type == 'hotel'){
 

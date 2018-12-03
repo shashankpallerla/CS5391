@@ -167,7 +167,40 @@
                     </div>
 
                     <div class="tab-pane fade" id="deals" role="tabpanel" aria-labelledby="deals-tab" style="padding-top: 15px;">
-
+                        <form class="needs-validation" method="get" action="<?php echo base_url(); ?>deals">
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Source</label>
+                                    <select class="form-control" id="source3" name="source">
+                                        <option>Select</option>
+                                        <?php foreach($hotelcodes as $code): ?>
+                                            <option value="<?php echo $code['id']; ?>"><?php echo $code['name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Destination</label>
+                                    <select class="form-control" id="destination3" name="destination">
+                                        <option>Select</option>
+                                        <?php foreach($hotelcodes as $code): ?>
+                                            <option value="<?php echo $code['id']; ?>"><?php echo $code['name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom03">Price Range</label>
+                                    <select class="form-control" id="price_range" name="price_range">
+                                        <option>0 to 100 USD</option>
+                                        <option>100 to 500 USD</option>
+                                        <option>500 to 1000 USD</option>
+                                        <option>1000 and more</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Search Deals</button>
+                        </form>
                     </div>
 
                     <script type="text/javascript">
@@ -188,6 +221,17 @@
                                 $('#destination2 option').each(function(key,val){
                                     if(key == value){
                                         $("#destination2 option[value='"+value+"']").remove();
+                                    }
+                                });
+                            });
+
+
+                            $('#source3').change(function () {
+                                var value = $('#source3').val();
+
+                                $('#destination3 option').each(function(key,val){
+                                    if(key == value){
+                                        $("#destination3 option[value='"+value+"']").remove();
                                     }
                                 });
                             });

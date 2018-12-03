@@ -12,42 +12,40 @@
                 </div>
             <?php } ?>
 
-            <form class="needs-validation" method="get" action="<?php echo base_url(); ?>hotels">
+            <form class="needs-validation" method="get" action="<?php echo base_url(); ?>deals">
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom01">Destination</label>
-                        <select class="form-control" id="destination" name="destination">
+                        <label for="validationCustom01">Source</label>
+                        <select class="form-control" id="source3" name="source">
                             <option>Select</option>
                             <?php foreach($hotelcodes as $code): ?>
-                                <option value="<?php echo $code['id']; ?>" <?php if(isset($_GET['destination'])){if($code['id'] == $_GET['destination']){ echo "selected";}} ?>><?php echo $code['name']; ?></option>
+                                <option value="<?php echo $code['id']; ?>"><?php echo $code['name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom01">Destination</label>
+                        <select class="form-control" id="destination3" name="destination">
+                            <option>Select</option>
+                            <?php foreach($hotelcodes as $code): ?>
+                                <option value="<?php echo $code['id']; ?>"><?php echo $code['name']; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom03">Checkin Date</label>
-                        <input type="date" class="form-control" id="validationCustom03" name="checkin_date" value="<?php echo (isset($_GET['checkin_date'])) ? $_GET['checkin_date'] : NULL; ?>" required>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom04">Checkout Date</label>
-                        <input type="date" class="form-control" id="validationCustom04" name="checkout_date" value="<?php echo (isset($_GET['checkout_date'])) ? $_GET['checkout_date'] : NULL; ?>" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-2 mb-3">
-                        <label for="validationCustom05">No of Rooms</label>
-                        <input type="number" class="form-control" id="validationCustom05" name="no_rooms" value="<?php echo (isset($_GET['no_rooms'])) ? $_GET['no_rooms'] : 1; ?>" required>
-                    </div>
-                    <div class="col-md-2 mb-3">
-                        <label for="validationCustom05">No of People</label>
-                        <input type="number" class="form-control" id="validationCustom05" name="no_people" value="<?php echo (isset($_GET['no_people'])) ? $_GET['no_people'] : 2; ?>" required>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationCustom03">Price Range</label>
+                        <select class="form-control" id="price_range" name="price_range">
+                            <option>0 to 100 USD</option>
+                            <option>100 to 500 USD</option>
+                            <option>500 to 1000 USD</option>
+                            <option>1000 and more</option>
+                        </select>
                     </div>
                 </div>
-                <?php if(isset($_GET['fhotelsid'])){ ?>
-                    <input type="hidden" name="fhotelsid" value="<?=$_GET['fhotelsid'];?>">
-                <?php } ?>
-                <button class="btn btn-primary" type="submit">Search Hotels</button>
+
+                <button class="btn btn-primary" type="submit">Search Deals</button>
             </form>
 
         </div>
@@ -58,20 +56,20 @@
 
             <div class="col-md-12" style="margin-top: 20px;">
 
-<!--                <ul class="step d-flex flex-nowrap">-->
-<!--                    <li class="step-item">-->
-<!--                        <a href="#!" class="">Search Hotel</a>-->
-<!--                    </li>-->
-<!--                    <li class="step-item active">-->
-<!--                        <a href="#!" class="">Select Hotel</a>-->
-<!--                    </li>-->
-<!--                    <li class="step-item">-->
-<!--                        <a href="#!" class="">Payment</a>-->
-<!--                    </li>-->
-<!--                    <li class="step-item">-->
-<!--                        <a href="#!" class="">Confirmation</a>-->
-<!--                    </li>-->
-<!--                </ul>-->
+                <ul class="step d-flex flex-nowrap">
+                    <li class="step-item">
+                        <a href="#!" class="">Search Hotel</a>
+                    </li>
+                    <li class="step-item active">
+                        <a href="#!" class="">Select Hotel</a>
+                    </li>
+                    <li class="step-item">
+                        <a href="#!" class="">Payment</a>
+                    </li>
+                    <li class="step-item">
+                        <a href="#!" class="">Confirmation</a>
+                    </li>
+                </ul>
 
 
                 <h4> Select Hotel</h4>
@@ -123,6 +121,23 @@
             </script>
 
         <?php } ?>
+
+
+        <script type="application/javascript">
+            $(document).ready( function () {
+                $('#source').change(function () {
+                    var value = $('#source').val();
+                    console.log(value);
+
+                    $('#destination option').each(function(key,val){
+                        if(key == value){
+                            $("#destination option[value='"+value+"']").remove();
+                        }
+                    });
+                });
+            } );
+        </script>
+
 
 
     </div>
