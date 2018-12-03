@@ -44,13 +44,36 @@
                         <label for="validationCustom04">Return Date</label>
                         <input type="date" class="form-control" id="validationCustom04" name="return_date" value="<?php if(isset($_GET['return_date'])) echo $_GET['return_date']; ?>" required>
                     </div>
+                    <?php if(isset($_GET['fhotels'])){ ?>
+                    <div class="col-md-2 mb-3">
+                        <label for="validationCustom04">Hotel Destination</label>
+                        <select class="form-control" id="destination_hotel" name="destination_hotel">
+                            <option>Select</option>
+                            <?php foreach($hotelcodes as $code): ?>
+                                <option value="<?php echo $code['id']; ?>" <?php if($_GET['destination_hotel'] == $code['id']) echo "selected"; ?>><?php echo $code['name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <?php } ?>
+
                     <div class="col-md-2 mb-3">
                         <label for="validationCustom05">No of Travelers</label>
                         <input type="number" class="form-control" id="validationCustom05" name="travelers" value="<?php if(isset($_GET['travelers'])) echo $_GET['travelers']; ?>" required>
                     </div>
+
+                    <?php if(isset($_GET['fhotels'])){ ?>
+                    <div class="col-md-2 mb-3">
+                        <label for="validationCustom05">No of Rooms</label>
+                        <input type="number" class="form-control" id="validationCustom05" name="no_rooms" value="<?php if(isset($_GET['no_rooms'])) echo $_GET['no_rooms']; ?>" required>
+                    </div>
+                    <?php } ?>
+
                 </div>
                 <input hidden name="type" value="dep">
-                <button class="btn btn-primary" type="submit">Search Flights</button>
+                <?php if(isset($_GET['fhotels'])){ ?>
+                    <input hidden name="fhotels" value="true">
+                <?php } ?>
+                <button class="btn btn-primary" type="submit"> <?php if(isset($_GET['fhotels'])){ echo "Search Flight + Hotel"; } else echo "Search Flights";?></button>
             </form>
 
         </div>
@@ -93,6 +116,11 @@
                                     <input type="hidden" name="departure_flight" value="<?php echo $flight['id']; ?>">
                                 <?php }else{ ?>
                                     <input type="hidden" name="return_flight" value="<?php echo $flight['id']; ?>">
+                                <?php } ?>
+                                <?php if(isset($_GET['fhotels'])){ ?>
+                                    <input hidden name="destination_hotel" value="<?php echo $_GET['destination_hotel']; ?>">
+                                    <input hidden name="no_rooms" value="<?php echo $_GET['no_rooms']; ?>">
+                                    <input hidden name="fhotels" value="true">
                                 <?php } ?>
                                 <input type="submit" value="Select" class="btn btn-success">
                             </form>

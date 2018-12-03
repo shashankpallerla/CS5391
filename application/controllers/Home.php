@@ -86,7 +86,7 @@ class Home extends CI_Controller {
         }
 
 
-//        print_r($inputs); exit;
+//       echo "<pre>"; print_r($inputs); exit;
 
         if(isset($inputs['hotelid'])){
             $user = $this->ion_auth->user()->row();
@@ -101,6 +101,8 @@ class Home extends CI_Controller {
             $fee = $amount * HOTELS_FEE;
             $totalamount = $amount + $fee;
 
+            $fhotelsid = (isset($inputs['fhotelsid'])) ? $inputs['fhotelsid'] : 0;
+
             $insert = array(
                 'hotel_id' => $inputs['hotelid'],
                 'userid' => $user->id,
@@ -111,11 +113,17 @@ class Home extends CI_Controller {
                 'totalamount' => $totalamount,
                 'checkin_date' => $inputs['checkin_date'],
                 'checkout_date' => $inputs['checkout_date'],
-                'status' => HOTELS_STATUS1
+                'status' => HOTELS_STATUS1,
+                'fhotelsid' => $fhotelsid,
             );
 
             $id = $this->hotelorders_model->insert($insert);
-            $url = base_url('payment')."?type=hotel&orderId=".$id;
+
+            if(isset($inputs['fhotelsid'])){
+                $url = base_url('payment')."?type=fhotel&horderId=".$id."&forderId=".$fhotelsid;
+            }else{
+                $url = base_url('payment')."?type=hotel&orderId=".$id;
+            }
             redirect($url,'refresh');
 
         }else{
@@ -127,10 +135,12 @@ class Home extends CI_Controller {
     public function flights(){
         $this->load->model('flights_model');
         $this->load->model('airports_model');
+        $this->load->model('hoteldestinations_model');
 
         $data = array();
 
         $data['codes'] = $this->airports_model->as_array()->get_all();
+        $data['hotelcodes'] = $this->hoteldestinations_model->as_array()->get_all();
 
         if($this->input->get()){
 
@@ -180,7 +190,11 @@ class Home extends CI_Controller {
 
     public function bookflight(){
 
+        $this->load->model('flights_model');
+
         $inputs = $this->input->post();
+
+//        echo "<pre>"; print_r($inputs); exit;
 
         if(!$this->ion_auth->logged_in()){
             $this->session->set_flashdata('errors', 'Please login to book flights!');
@@ -197,7 +211,7 @@ class Home extends CI_Controller {
             $url = base_url('flights')."?".http_build_query($getData);
             redirect($url,'refresh');
 
-        }else if($inputs['type'] == 'ret'){
+        }else if($inputs['type'] == 'ret' && !isset($inputs['fhotels'])){
             $this->session->set_userdata('return_flight', $inputs['return_flight']);
 
             if(isset($_SESSION['departure_flight']) && isset($_SESSION['return_flight'])){
@@ -216,7 +230,45 @@ class Home extends CI_Controller {
                 redirect($url,'refresh');
             }
 
-        }else{
+        }else if($inputs['type'] == 'ret' && isset($inputs['fhotels'])){
+            $this->session->set_userdata('destination_hotel', $inputs['destination_hotel']);
+            $this->session->set_userdata('no_rooms', $inputs['no_rooms']);
+
+            $departureDetails = $this->flights_model->as_array()->get($_SESSION['departure_flight']);
+            $returnDetails = $this->flights_model->as_array()->get($_SESSION['return_flight']);
+
+//            echo "<pre>"; print_r($inputs); exit;
+
+            if(isset($_SESSION['departure_flight']) && isset($_SESSION['return_flight'])) {
+                $user = $this->ion_auth->user()->row();
+                $this->load->model('flightorders_model');
+                $insert = array(
+                    'travelers' => $inputs['travelers'],
+                    'departure_flight' => $_SESSION['departure_flight'],
+                    'return_flight' => $_SESSION['return_flight'],
+                    'userid' => $user->id,
+                    'fhotels' => 1,
+                    'status' => 'processing'
+                );
+
+              $id = $this->flightorders_model->insert($insert);
+
+              $start = strtotime($departureDetails['arrival']);
+              $end = strtotime($returnDetails['departure']);
+
+              $fhotelsInputs['checkin_date'] = date( "Y-m-d", $start);
+              $fhotelsInputs['checkout_date'] = date( "Y-m-d", $end);
+              $fhotelsInputs['destination'] = $inputs['destination_hotel'];
+              $fhotelsInputs['no_rooms'] = $inputs['no_rooms'];
+              $fhotelsInputs['no_people'] = $inputs['travelers'];
+              $fhotelsInputs['fhotelsid'] = $id;
+
+              $url = base_url('hotels')."?".http_build_query($fhotelsInputs);
+
+              redirect($url, 'refresh');
+            }
+        }
+        else{
             redirect('Home','refresh');
         }
 
@@ -227,6 +279,7 @@ class Home extends CI_Controller {
         $this->load->model('users_model');
         $this->load->model('hotelorders_model');
         $this->load->model('hotels_model');
+        $this->load->model('flights_model');
         $user = $this->ion_auth->user()->row();
 
         if(isset($_POST['success']) && $_POST['type'] == 'flight'){
@@ -248,7 +301,20 @@ class Home extends CI_Controller {
             redirect('dashboard/hotelorders','refresh');
         }
 
-        $id = $_GET['orderId'];
+        if(isset($_POST['success']) && $_POST['type'] == 'fhotel'){
+
+            $this->flightorders_model->update(array('status' => 'Confirmed'),$this->input->post('forderId'));
+            $orderDetails = $this->flightorders_model->as_array()->get($this->input->post('forderId'));
+            $this->users_model->update(array('miles' => $user->miles + $orderDetails['totalmiles']),$user->id);
+
+            $this->hotelorders_model->update(array('status' => 'Confirmed'),$this->input->post('horderId'));
+
+//            echo "<pre>"; print_r($_POST); exit;
+
+            redirect('dashboard','refresh');
+        }
+
+        $id = (isset($_GET['orderId'])) ? $_GET['orderId'] : 0;
         $type = $_GET['type'];
 
         $data = array();
@@ -259,6 +325,8 @@ class Home extends CI_Controller {
             $data['retFlight'] = $this->flights_model->with_source()->with_destination()->as_array()->get($orderDetails['return_flight']);
             $data['travelers'] = $orderDetails['travelers'];
             $total = $data['depFlight']['twoway'];
+            $data['amount'] =  $total;
+            $data['fee'] = ($total / 100) * 15;
             $data['total'] =  $total + (($total / 100) * 15);
             $data['totalMiles'] = $data['depFlight']['miles'] + $data['retFlight']['miles'];
             $data['userData'] = $user;
@@ -284,8 +352,42 @@ class Home extends CI_Controller {
 
 //            echo "<pre>"; print_r($data); exit;
 
-        }
+        }else if($type == 'fhotel'){
 
+            $orderDetails = $this->flightorders_model->as_array()->get($_GET['forderId']);
+
+            $data['forderId'] = $_GET['forderId'];
+            $data['horderId'] = $_GET['horderId'];
+            $data['userData'] = $user;
+            $data['depFlight'] = $this->flights_model->with_source()->with_destination()->as_array()->get($orderDetails['departure_flight']);
+            $data['retFlight'] = $this->flights_model->with_source()->with_destination()->as_array()->get($orderDetails['return_flight']);
+            $data['travelers'] = $orderDetails['travelers'];
+            $flight_total = $data['depFlight']['twoway'];
+            $data['total'] =  $flight_total + (($flight_total / 100) * 15);
+            $data['totalMiles'] = $data['depFlight']['miles'] + $data['retFlight']['miles'];
+
+            $this->flightorders_model->update(array('totalmiles' => $data['totalMiles'], 'totalamount' => $data['total']),$this->input->post('orderId'));
+
+            $orderDetails = $this->hotelorders_model->as_array()->get($_GET['horderId']);
+
+//            echo "<pre>"; print_r($orderDetails); exit;
+
+            $data['orderId'] = $id;
+            $data['type'] = $type;
+            $data['orderDetails'] = $orderDetails;
+            $data['hotelDetails'] = $this->hotels_model->as_array()->get($orderDetails['hotel_id']);
+
+            $data['total'] = $flight_total + $orderDetails['amount'];
+            $data['discount'] = $data['total'] * FLIGHTS_HOTELS_DISCOUNT;
+            $data['totalAfterDiscount'] = $data['total'] - $data['discount'];
+            $data['fee'] = $data['totalAfterDiscount'] * FLIGHTS_HOTELS_FEE;
+            $data['amount'] = $data['totalAfterDiscount'] + $data['fee']; //final
+
+
+//            echo "<pre>"; print_r($data); exit;
+
+
+        }
 
         $this->load->view('include/header');
         $this->load->view('payment',$data);

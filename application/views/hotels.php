@@ -19,7 +19,7 @@
                         <select class="form-control" id="destination" name="destination">
                             <option>Select</option>
                             <?php foreach($hotelcodes as $code): ?>
-                                <option value="<?php echo $code['id']; ?>"><?php echo $code['name']; ?></option>
+                                <option value="<?php echo $code['id']; ?>" <?php if($code['id'] == $_GET['destination']){ echo "selected";} ?>><?php echo $code['name']; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -27,23 +27,26 @@
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="validationCustom03">Checkin Date</label>
-                        <input type="date" class="form-control" id="validationCustom03" name="checkin_date" required>
+                        <input type="date" class="form-control" id="validationCustom03" name="checkin_date" value="<?php echo $_GET['checkin_date']; ?>" required>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="validationCustom04">Checkout Date</label>
-                        <input type="date" class="form-control" id="validationCustom04" name="checkout_date" required>
+                        <input type="date" class="form-control" id="validationCustom04" name="checkout_date" value="<?php echo $_GET['checkout_date']; ?>" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-2 mb-3">
                         <label for="validationCustom05">No of Rooms</label>
-                        <input type="number" class="form-control" id="validationCustom05" name="no_rooms" value="1" required>
+                        <input type="number" class="form-control" id="validationCustom05" name="no_rooms" value="<?php echo (isset($_GET['no_rooms'])) ? $_GET['no_rooms'] : 1; ?>" required>
                     </div>
                     <div class="col-md-2 mb-3">
                         <label for="validationCustom05">No of People</label>
-                        <input type="number" class="form-control" id="validationCustom05" name="no_people" value="2" required>
+                        <input type="number" class="form-control" id="validationCustom05" name="no_people" value="<?php echo (isset($_GET['no_people'])) ? $_GET['no_people'] : 2; ?>" required>
                     </div>
                 </div>
+                <?php if(isset($_GET['fhotelsid'])){ ?>
+                    <input type="hidden" name="fhotelsid" value="<?=$_GET['fhotelsid'];?>">
+                <?php } ?>
                 <button class="btn btn-primary" type="submit">Search Hotels</button>
             </form>
 
@@ -97,6 +100,9 @@
                                     <input type="hidden" name="checkout_date" value="<?php echo $_GET['checkout_date']; ?>">
                                     <input type="hidden" name="no_rooms" value="<?php echo $_GET['no_rooms']; ?>">
                                     <input type="hidden" name="no_people" value="<?php echo $_GET['no_people']; ?>">
+                                    <?php if(isset($_GET['fhotelsid'])){ ?>
+                                        <input type="hidden" name="fhotelsid" value="<?=$_GET['fhotelsid'];?>">
+                                    <?php } ?>
                                     <input type="submit" value="Select" class="btn btn-success">
                                 </form>
                             </td>

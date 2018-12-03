@@ -22,6 +22,9 @@
                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#hotels" role="tab" aria-controls="hotels" aria-selected="false">Hotels Search</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" id="hotelsflight-tab" data-toggle="tab" href="#fhotels" role="tab" aria-controls="fhotels" aria-selected="false">Flight + Hotel Search</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" id="contact-tab" data-toggle="tab" href="#deals" role="tab" aria-controls="deals" aria-selected="false">Deals</a>
                     </li>
                 </ul>
@@ -107,6 +110,62 @@
 
 
                     </div>
+                    <div class="tab-pane fade" id="fhotels" role="tabpanel" aria-labelledby="fhotels-tab" style="padding-top: 15px;">
+                        <form class="needs-validation" method="get" action="<?php echo base_url(); ?>flights">
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Source</label>
+                                    <select class="form-control" id="source" name="source">
+                                        <option>Select</option>
+                                        <?php foreach($codes as $code): ?>
+                                            <option value="<?php echo $code['id']; ?>"><?php echo $code['code']; ?> - <?php echo $code['name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Destination</label>
+                                    <select class="form-control" id="destination" name="destination">
+                                        <option>Select</option>
+                                        <?php foreach($codes as $code): ?>
+                                            <option value="<?php echo $code['id']; ?>"><?php echo $code['code']; ?> - <?php echo $code['name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom03">Departure Date</label>
+                                    <input type="date" class="form-control" id="validationCustom03" name="dep_date" required>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom04">Return Date</label>
+                                    <input type="date" class="form-control" id="validationCustom04" name="return_date" required>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationCustom04">Hotel Destination</label>
+                                    <select class="form-control" id="destination_hotel" name="destination_hotel">
+                                        <option>Select</option>
+                                        <?php foreach($hotelcodes as $code): ?>
+                                            <option value="<?php echo $code['id']; ?>"><?php echo $code['name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationCustom05">No of Travelers</label>
+                                    <input type="number" class="form-control" id="validationCustom05" name="travelers" value="1" required>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationCustom05">No of Rooms</label>
+                                    <input type="number" class="form-control" id="validationCustom05" name="no_rooms" value="1" required>
+                                </div>
+                            </div>
+                            <input type="hidden" name="type" value="dep">
+                            <input type="hidden" name="fhotels" value="true">
+                            <button class="btn btn-primary" type="submit">Search Flight + Hotel</button>
+                        </form>
+
+                    </div>
+
                     <div class="tab-pane fade" id="deals" role="tabpanel" aria-labelledby="deals-tab" style="padding-top: 15px;">
 
                     </div>
