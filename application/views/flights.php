@@ -38,11 +38,11 @@
                 <div class="form-row">
                     <div class="col-md-3 mb-3">
                         <label for="validationCustom03">Departure Date</label>
-                        <input type="date" class="form-control" id="validationCustom03" name="dep_date" value="<?php if(isset($_GET['dep_date'])) echo $_GET['dep_date']; ?>" required>
+                        <input type="date" class="form-control" id="dep_date" name="dep_date" value="<?php if(isset($_GET['dep_date'])) echo $_GET['dep_date']; ?>" required>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="validationCustom04">Return Date</label>
-                        <input type="date" class="form-control" id="validationCustom04" name="return_date" value="<?php if(isset($_GET['return_date'])) echo $_GET['return_date']; ?>" required>
+                        <input type="date" class="form-control" id="return_date" name="return_date" value="<?php if(isset($_GET['return_date'])) echo $_GET['return_date']; ?>" required>
                     </div>
                     <?php if(isset($_GET['fhotels'])){ ?>
                     <div class="col-md-2 mb-3">
@@ -58,13 +58,13 @@
 
                     <div class="col-md-2 mb-3">
                         <label for="validationCustom05">No of Travelers</label>
-                        <input type="number" class="form-control" id="validationCustom05" name="travelers" value="<?php if(isset($_GET['travelers'])) echo $_GET['travelers']; ?>" required>
+                        <input type="number" class="form-control" id="travelers" name="travelers" value="<?php if(isset($_GET['travelers'])) echo $_GET['travelers']; ?>" required>
                     </div>
 
                     <?php if(isset($_GET['fhotels'])){ ?>
                     <div class="col-md-2 mb-3">
                         <label for="validationCustom05">No of Rooms</label>
-                        <input type="number" class="form-control" id="validationCustom05" name="no_rooms" value="<?php if(isset($_GET['no_rooms'])) echo $_GET['no_rooms']; ?>" required>
+                        <input type="number" class="form-control" id="no_rooms" name="no_rooms" value="<?php if(isset($_GET['no_rooms'])) echo $_GET['no_rooms']; ?>" required>
                     </div>
                     <?php } ?>
 
@@ -144,6 +144,22 @@
         </script>
 
         <?php } ?>
+
+
+        <script type="application/javascript">
+            $(document).ready( function () {
+                $('#source').change(function () {
+                    var value = $('#source').val();
+                    console.log(value);
+
+                    $('#destination option').each(function(key,val){
+                        if(key == value){
+                            $("#destination option[value='"+value+"']").remove();
+                        }
+                    });
+                });
+            } );
+        </script>
 
 
     </div>

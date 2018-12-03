@@ -34,7 +34,7 @@
                             <div class="form-row">
                                 <div class="col-md-4 mb-3">
                                     <label for="validationCustom01">Source</label>
-                                    <select class="form-control" id="source" name="source">
+                                    <select class="form-control" id="source1" name="source">
                                         <option>Select</option>
                                         <?php foreach($codes as $code): ?>
                                             <option value="<?php echo $code['id']; ?>"><?php echo $code['code']; ?> - <?php echo $code['name']; ?></option>
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="validationCustom01">Destination</label>
-                                    <select class="form-control" id="destination" name="destination">
+                                    <select class="form-control" id="destination1" name="destination">
                                         <option>Select</option>
                                         <?php foreach($codes as $code): ?>
                                             <option value="<?php echo $code['id']; ?>"><?php echo $code['code']; ?> - <?php echo $code['name']; ?></option>
@@ -54,15 +54,15 @@
                             <div class="form-row">
                                 <div class="col-md-3 mb-3">
                                     <label for="validationCustom03">Departure Date</label>
-                                    <input type="date" class="form-control" id="validationCustom03" name="dep_date" required>
+                                    <input type="date" class="form-control" id="dep_date" name="dep_date" required>
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label for="validationCustom04">Return Date</label>
-                                    <input type="date" class="form-control" id="validationCustom04" name="return_date" required>
+                                    <input type="date" class="form-control" id="return_date" name="return_date" required>
                                 </div>
                                 <div class="col-md-2 mb-3">
                                     <label for="validationCustom05">No of Travelers</label>
-                                    <input type="number" class="form-control" id="validationCustom05" name="travelers" value="1" required>
+                                    <input type="number" class="form-control" id="travelers" name="travelers" value="1" required>
                                 </div>
                             </div>
                             <input type="hidden" name="type" value="dep">
@@ -88,21 +88,21 @@
                             <div class="form-row">
                                 <div class="col-md-4 mb-3">
                                         <label for="validationCustom03">Checkin Date</label>
-                                        <input type="date" class="form-control" id="validationCustom03" name="checkin_date" required>
+                                        <input type="date" class="form-control" id="checkin_date" name="checkin_date" required>
                                 </div>
                                 <div class="col-md-4 mb-3">
                                         <label for="validationCustom04">Checkout Date</label>
-                                        <input type="date" class="form-control" id="validationCustom04" name="checkout_date" required>
+                                        <input type="date" class="form-control" id="checkout_date" name="checkout_date" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-2 mb-3">
                                     <label for="validationCustom05">No of Rooms</label>
-                                    <input type="number" class="form-control" id="validationCustom05" name="no_rooms" value="1" required>
+                                    <input type="number" class="form-control" id="no_rooms" name="no_rooms" value="1" required>
                                 </div>
                                 <div class="col-md-2 mb-3">
                                     <label for="validationCustom05">No of People</label>
-                                    <input type="number" class="form-control" id="validationCustom05" name="no_people" value="2" required>
+                                    <input type="number" class="form-control" id="no_people" name="no_people" value="2" required>
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit">Search Hotels</button>
@@ -115,7 +115,7 @@
                             <div class="form-row">
                                 <div class="col-md-4 mb-3">
                                     <label for="validationCustom01">Source</label>
-                                    <select class="form-control" id="source" name="source">
+                                    <select class="form-control" id="source2" name="source">
                                         <option>Select</option>
                                         <?php foreach($codes as $code): ?>
                                             <option value="<?php echo $code['id']; ?>"><?php echo $code['code']; ?> - <?php echo $code['name']; ?></option>
@@ -124,7 +124,7 @@
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="validationCustom01">Destination</label>
-                                    <select class="form-control" id="destination" name="destination">
+                                    <select class="form-control" id="destination2" name="destination">
                                         <option>Select</option>
                                         <?php foreach($codes as $code): ?>
                                             <option value="<?php echo $code['id']; ?>"><?php echo $code['code']; ?> - <?php echo $code['name']; ?></option>
@@ -135,11 +135,11 @@
                             <div class="form-row">
                                 <div class="col-md-3 mb-3">
                                     <label for="validationCustom03">Departure Date</label>
-                                    <input type="date" class="form-control" id="validationCustom03" name="dep_date" required>
+                                    <input type="date" class="form-control" id="dep_date" name="dep_date" required>
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label for="validationCustom04">Return Date</label>
-                                    <input type="date" class="form-control" id="validationCustom04" name="return_date" required>
+                                    <input type="date" class="form-control" id="return_date" name="return_date" required>
                                 </div>
                                 <div class="col-md-2 mb-3">
                                     <label for="validationCustom04">Hotel Destination</label>
@@ -152,11 +152,11 @@
                                 </div>
                                 <div class="col-md-2 mb-3">
                                     <label for="validationCustom05">No of Travelers</label>
-                                    <input type="number" class="form-control" id="validationCustom05" name="travelers" value="1" required>
+                                    <input type="number" class="form-control" id="travelers" name="travelers" value="1" required>
                                 </div>
                                 <div class="col-md-2 mb-3">
                                     <label for="validationCustom05">No of Rooms</label>
-                                    <input type="number" class="form-control" id="validationCustom05" name="no_rooms" value="1" required>
+                                    <input type="number" class="form-control" id="no_rooms" name="no_rooms" value="1" required>
                                 </div>
                             </div>
                             <input type="hidden" name="type" value="dep">
@@ -169,6 +169,32 @@
                     <div class="tab-pane fade" id="deals" role="tabpanel" aria-labelledby="deals-tab" style="padding-top: 15px;">
 
                     </div>
+
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                            $('#source1').change(function () {
+                                var value = $('#source1').val();
+
+                                $('#destination1 option').each(function(key,val){
+                                    if(key == value){
+                                        $("#destination1 option[value='"+value+"']").remove();
+                                    }
+                                });
+                            });
+
+                            $('#source2').change(function () {
+                                var value = $('#source2').val();
+
+                                $('#destination2 option').each(function(key,val){
+                                    if(key == value){
+                                        $("#destination2 option[value='"+value+"']").remove();
+                                    }
+                                });
+                            });
+
+                        });
+                    </script>
+
                 </div>
             </div>
         </div>
