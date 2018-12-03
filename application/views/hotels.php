@@ -27,11 +27,11 @@
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="validationCustom03">Checkin Date</label>
-                        <input type="date" class="form-control" id="validationCustom03" name="checkin_date" value="<?php echo $_GET['checkin_date']; ?>" required>
+                        <input type="date" class="form-control" id="validationCustom03" name="checkin_date" value="<?php echo (isset($_GET['checkin_date'])) ? $_GET['checkin_date'] : NULL; ?>" required>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="validationCustom04">Checkout Date</label>
-                        <input type="date" class="form-control" id="validationCustom04" name="checkout_date" value="<?php echo $_GET['checkout_date']; ?>" required>
+                        <input type="date" class="form-control" id="validationCustom04" name="checkout_date" value="<?php echo (isset($_GET['checkout_date'])) ? $_GET['checkout_date'] : NULL; ?>" required>
                     </div>
                 </div>
                 <div class="form-row">

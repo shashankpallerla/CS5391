@@ -6,22 +6,22 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item <?php if($this->uri->segment('1') == ''){ echo "active"; } ?>">
                 <a class="nav-link" href="<?php echo base_url(); ?>">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <?php if($this->uri->segment('1') == 'flights'){ echo "active"; } ?>">
                 <a class="nav-link" href="<?php echo base_url(); ?>flights">Flights</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <?php if($this->uri->segment('1') == 'hotels'){ echo "active"; } ?>">
                 <a class="nav-link" href="<?php echo base_url(); ?>hotels">Hotels</a>
             </li>
-<!--            <li class="nav-item">-->
+<!--            <li class="nav-item <?php if($this->uri->segment('1') == 'deals'){ echo "active"; } ?>">-->
 <!--                <a class="nav-link" href="--><?php //echo base_url(); ?><!--deals">Deals</a>-->
 <!--            </li>-->
-            <li class="nav-item">
+            <li class="nav-item <?php if($this->uri->segment('1') == 'feedback'){ echo "active"; } ?>">
                 <a class="nav-link" href="<?php echo base_url(); ?>feedback">Feedback</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <?php if($this->uri->segment('1') == 'flightstatus'){ echo "active"; } ?>">
                 <a class="nav-link" href="<?php echo base_url(); ?>flightstatus">Check Flight status</a>
             </li>
 <!--            <li class="nav-item">-->
