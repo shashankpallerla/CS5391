@@ -75,7 +75,7 @@
 
 
                 <h4> Select Hotel</h4>
-                <br>
+                <hr>
                 <table id="myHotels">
                     <thead>
                     <tr>
@@ -118,7 +118,10 @@
 
             <script type="application/javascript">
                 $(document).ready( function () {
-                    $('#myHotels').DataTable();
+                    $('#myHotels').DataTable({
+                        "info": false,
+                        "lengthChange": false
+                    });
                 } );
             </script>
 

@@ -149,13 +149,11 @@
                          </table>
                      </div>
 
-<!--                    <div class="">-->
                      <div class="col-md-6 card-counter success">
                          <i class="fa fa-code-fork"></i>
                          <span class="count-numbers"><?=$userData->miles; ?></span>
                          <span class="count-name">Miles Accumulated</span>
                      </div>
-<!--                    </div>-->
 
              </div>
          </div>
@@ -293,6 +291,12 @@
                                     <td><?php echo $orderDetails['totalamount']; ?> USD</td>
                                 </tr>
                             </table>
+                        </div>
+
+                        <div class="col-md-6 card-counter success">
+                            <i class="fa fa-code-fork"></i>
+                            <span class="count-numbers"><?=$userData->miles; ?></span>
+                            <span class="count-name">Miles Accumulated</span>
                         </div>
 
                     </div>
@@ -472,6 +476,13 @@
                                     </tr>
                                 </table>
                             </div>
+
+                            <div class="col-md-6 card-counter success">
+                                <i class="fa fa-code-fork"></i>
+                                <span class="count-numbers"><?=$userData->miles; ?></span>
+                                <span class="count-name">Miles Accumulated</span>
+                            </div>
+
                         </div>
                     </div>
                 </div>

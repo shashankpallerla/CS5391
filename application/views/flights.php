@@ -81,9 +81,27 @@
 
         <?php if(isset($flights)){ ?>
 
+<!--            <ul class="step d-flex flex-nowrap" style="margin-top: 40px;margin-bottom: 40px;">-->
+<!--                <li class="step-item">-->
+<!--                    <a href="#!" class="">Search Flight</a>-->
+<!--                </li>-->
+<!--                <li class="step-item active">-->
+<!--                    <a href="#!" class="">Select Departure Flight</a>-->
+<!--                </li>-->
+<!--                <li class="step-item">-->
+<!--                    <a href="#!" class="">Select Return Flight</a>-->
+<!--                </li>-->
+<!--                <li class="step-item">-->
+<!--                    <a href="#!" class="">Payment</a>-->
+<!--                </li>-->
+<!--                <li class="step-item">-->
+<!--                    <a href="#!" class="">Confirmation</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+
         <div class="col-md-12" style="margin-top: 20px;">
             <h4> Select <?php if($_GET['type'] == 'dep') echo "Departure"; else echo "Return"; ?> Flight</h4>
-            <br>
+            <hr>
             <table id="myFlights">
                 <thead>
                 <tr>
@@ -140,7 +158,11 @@
 
         <script type="application/javascript">
             $(document).ready( function () {
-                $('#myFlights').DataTable();
+                $('#myFlights').DataTable({
+                    "info": false,
+                    "lengthChange": false
+                });
+
             } );
         </script>
 
