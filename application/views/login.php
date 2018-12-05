@@ -31,6 +31,10 @@
                 <input id="password" name="password" type="password" required="required" class="form-control here">
             </div>
         </div>
+
+        <?php if(isset($_GET['ref'])){ ?>
+        <input type="hidden" name="ref" value="<?php echo $_GET['ref']; ?>">
+        <?php } ?>
         <div class="form-group row">
             <div class="offset-4 col-8">
                 <button name="submit" type="submit" class="btn btn-primary">Login</button>

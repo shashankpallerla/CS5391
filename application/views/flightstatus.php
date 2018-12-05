@@ -28,7 +28,12 @@
                     <div class="form-group row">
                         <label for="airlinename" class="col-4 col-form-label">Airline Name</label>
                         <div class="col-8">
-                            <input id="airlinename" name="airlinename" type="text" class="form-control here">
+                            <select name="airlinename" class="form-control here">
+                                <option>Select</option>
+                                <?php foreach($airlines  as $key => $value): ?>
+                                <option value="<?php echo $value['airline']; ?>"><?php echo $value['airline']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">

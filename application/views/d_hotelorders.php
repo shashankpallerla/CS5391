@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-9">
             <div class="row">
-                <?php if(isset($orders) && count($orders) > 0){ ?>
+                <?php if(isset($orders) && count($orders) > 1){ ?>
 
                     <table id="myFlights">
                         <thead>
@@ -50,7 +50,9 @@
                         } );
                     </script>
 
-                <?php } ?>
+                <?php }else{
+                    echo "<div style='margin-top: 40px'><h4>No orders to display </h4></div>";
+                } ?>
             </div>
         </div>
     </div>

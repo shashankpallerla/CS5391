@@ -91,7 +91,7 @@
                     <td>Departure</td>
                     <td>Arrival</td>
                     <td>Airline</td>
-                    <td>Amount</td>
+                    <?php if($_GET['type'] == 'dep'){ ?> <td>Amount</td> <?php } ?>
                     <td>#</td>
                 </tr>
                 </thead>
@@ -102,7 +102,7 @@
                         <td><?php echo $flight['departure'] ?> </td>
                         <td><?php echo $flight['arrival'] ?> </td>
                         <td><?php echo $flight['airline'] ?> </td>
-                        <td><?php echo $flight['twoway'] ?> USD</td>
+                        <?php if($_GET['type'] == 'dep'){ ?>  <td><?php echo $flight['twoway'] ?> USD</td> <?php } ?>
                         <td>
 
                             <form method="post" action="<?php echo base_url(); ?>bookflight">
@@ -122,6 +122,7 @@
                                     <input hidden name="no_rooms" value="<?php echo $_GET['no_rooms']; ?>">
                                     <input hidden name="fhotels" value="true">
                                 <?php } ?>
+                                <input hidden name="currenturl" value="<?php echo current_url(); ?>?<?php echo http_build_query($_GET); ?>">
                                 <input type="submit" value="Select" class="btn btn-success">
                             </form>
 

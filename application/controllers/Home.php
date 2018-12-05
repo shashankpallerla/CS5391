@@ -243,11 +243,15 @@ class Home extends CI_Controller {
 
         $inputs = $this->input->post();
 
-//        echo "<pre>"; print_r($inputs); exit;
 
         if(!$this->ion_auth->logged_in()){
             $this->session->set_flashdata('errors', 'Please login to book flights!');
-            redirect('login','refresh');
+            if(isset($_POST['currenturl'])){
+                $url = base_url('login')."?ref=".$_POST['currenturl'];
+                redirect($url,'refresh');
+            }else{
+                redirect('login','refresh');
+            }
         }
 
         if($inputs['type'] == 'dep'){
@@ -463,7 +467,8 @@ class Home extends CI_Controller {
 
             if ($this->ion_auth->login($this->input->post('username'), $this->input->post('password'), $remember))
             {
-              redirect('dashboard','refresh');
+                redirect('dashboard','refresh');
+
             }
             else
             {
@@ -525,7 +530,7 @@ class Home extends CI_Controller {
 
             if($this->ion_auth->register($identity, $password, $email, $additional_data)){
                 $this->session->set_flashdata('messages', "You have successfully register, you can now login!");
-                redirect("register", 'refresh');
+                redirect("login", 'refresh');
             }else{
                 $this->session->set_flashdata('messages', "Something went wrong!");
                 redirect("register", 'refresh');
@@ -570,6 +575,12 @@ class Home extends CI_Controller {
     public function flightstatus(){
         $this->load->model('flights_model');
 
+        $query = $this->db->query("SELECT DISTINCT(airline) FROM flights ");
+        $data['airlines'] = $query->result_array();
+
+//                    echo "<pre>"; print_r($data); exit;
+
+
         $this->form_validation->set_rules('flightno', 'Flight No', 'trim|required');
         $this->form_validation->set_rules('airlinename', 'Airline Name', 'trim|required');
         $this->form_validation->set_rules('departuredate', 'Departure Date', 'trim|required');
@@ -584,7 +595,7 @@ class Home extends CI_Controller {
         }else{
             $this->session->set_flashdata('errors', validation_errors());
             $this->load->view('include/header');
-            $this->load->view('flightstatus');
+            $this->load->view('flightstatus',$data);
             $this->load->view('include/footer');
         }
 

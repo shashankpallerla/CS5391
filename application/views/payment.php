@@ -6,9 +6,9 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6">
-            <div class="card">
+            <div class="card text-white bg-secondary">
+                <div class="card-header">Departure Flight</div>
                 <div class="card-body">
-                    <h5 class="card-title">Departure Flight</h5>
                     <p class="card-text">
                         <b>Flight No: </b><?php echo $depFlight['id']; ?> <br>
                        <b> Source: </b><?php echo $depFlight['source']->name; ?> <br>
@@ -22,9 +22,9 @@
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="card">
+            <div class="card card text-white bg-secondary">
+                <div class="card-header">Return Flight</div>
                 <div class="card-body">
-                    <h5 class="card-title">Return Flight</h5>
                     <p class="card-text">
                         <b>Flight No: </b><?php echo $retFlight['id']; ?> <br>
                         <b> Source: </b><?php echo $retFlight['source']->name; ?> <br>
@@ -149,6 +149,14 @@
                          </table>
                      </div>
 
+<!--                    <div class="">-->
+                     <div class="col-md-6 card-counter success">
+                         <i class="fa fa-code-fork"></i>
+                         <span class="count-numbers"><?=$userData->miles; ?></span>
+                         <span class="count-name">Miles Accumulated</span>
+                     </div>
+<!--                    </div>-->
+
              </div>
          </div>
      </div>
@@ -160,9 +168,9 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <div class="card">
+                <div class="card text-white bg-secondary">
+                    <div class="card-header">Hotel Details</div>
                     <div class="card-body">
-                        <h5 class="card-title">Hotel Details</h5>
                         <p class="card-text">
                             <b>Hotel Name: </b><?php echo $hotelDetails['name']; ?> <br>
                             <b>Hotel No: </b><?php echo $orderDetails['id']; ?> <br>
@@ -299,9 +307,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
-                    <div class="card">
+                    <div class="card text-white bg-secondary">
+                        <div class="card-header">Hotel Details</div>
                         <div class="card-body">
-                            <h5 class="card-title">Hotel Details</h5>
                             <p class="card-text">
                                 <b>Hotel Name: </b><?php echo $hotelDetails['name']; ?> <br>
                                 <b>Hotel No: </b><?php echo $orderDetails['id']; ?> <br>
@@ -317,9 +325,9 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="card">
+                    <div class="card text-white bg-secondary">
+                        <div class="card-header">Departure Flight</div>
                         <div class="card-body">
-                            <h5 class="card-title">Departure Flight</h5>
                             <p class="card-text">
                                 <b>Flight No: </b><?php echo $depFlight['id']; ?> <br>
                                 <b> Source: </b><?php echo $depFlight['source']->name; ?> <br>
@@ -333,9 +341,9 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="card">
+                    <div class="card text-white bg-secondary">
+                        <div class="card-header">Return Flight</div>
                         <div class="card-body">
-                            <h5 class="card-title">Return Flight</h5>
                             <p class="card-text">
                                 <b>Flight No: </b><?php echo $retFlight['id']; ?> <br>
                                 <b> Source: </b><?php echo $retFlight['source']->name; ?> <br>

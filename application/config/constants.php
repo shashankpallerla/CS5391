@@ -87,7 +87,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 define('INTERNATIONAL_MILEAGE_REDEEM', 50000);
 define('DOMESTIC_MILEAGE_REDEEM', 25000);
-define('HOTELS_STATUS1', 'processing');
+define('HOTELS_STATUS1', 'Pending Payment');
 define('HOTELS_FEE', 0.15);
 define('FLIGHTS_HOTELS_DISCOUNT', 0.20);
 define('FLIGHTS_HOTELS_FEE', 0.15);
