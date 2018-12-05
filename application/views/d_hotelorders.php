@@ -4,10 +4,10 @@
 <div class="container">
     <br>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <?php include("d_menu.php"); ?>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="row">
                 <?php if(isset($orders) && count($orders) > 1){ ?>
 

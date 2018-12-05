@@ -173,7 +173,7 @@
                                     <label for="validationCustom01">Source</label>
                                     <select class="form-control" id="source3" name="source">
                                         <option>Select</option>
-                                        <?php foreach($hotelcodes as $code): ?>
+                                        <?php foreach($codes as $code): ?>
                                             <option value="<?php echo $code['id']; ?>"><?php echo $code['name']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
@@ -182,7 +182,7 @@
                                     <label for="validationCustom01">Destination</label>
                                     <select class="form-control" id="destination3" name="destination">
                                         <option>Select</option>
-                                        <?php foreach($hotelcodes as $code): ?>
+                                        <?php foreach($codes as $code): ?>
                                             <option value="<?php echo $code['id']; ?>"><?php echo $code['name']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
@@ -192,10 +192,10 @@
                                 <div class="col-md-3 mb-3">
                                     <label for="validationCustom03">Price Range</label>
                                     <select class="form-control" id="price_range" name="price_range">
-                                        <option>0 to 100 USD</option>
-                                        <option>100 to 500 USD</option>
-                                        <option>500 to 1000 USD</option>
-                                        <option>1000 and more</option>
+                                        <option value="1">0 to 100 USD</option>
+                                        <option value="2">100 to 500 USD</option>
+                                        <option value="3">500 to 1000 USD</option>
+                                        <option value="4">1000 and more</option>
                                     </select>
                                 </div>
                             </div>

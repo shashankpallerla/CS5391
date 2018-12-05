@@ -60,6 +60,7 @@ $route['dashboard'] = "Dashboard/index";
 $route['flights'] = "Home/flights";
 $route['hotels'] = "Home/hotels";
 $route['deals'] = "Home/deals";
+$route['bookdeal'] = "Home/bookdeal";
 $route['bookflight'] = "Home/bookflight";
 $route['bookhotel'] = "Home/bookhotel";
 $route['payment'] = "Home/payment";

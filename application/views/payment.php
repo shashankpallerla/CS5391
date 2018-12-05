@@ -144,7 +144,7 @@
                              </tr>
                              <tr class="table-info">
                                  <th scope="row">Total Amount</th>
-                                 <td><?php echo $amount; ?> USD</td>
+                                 <td><?php echo $total; ?> USD</td>
                              </tr>
                          </table>
                      </div>
