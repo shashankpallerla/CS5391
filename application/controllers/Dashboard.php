@@ -29,16 +29,14 @@ class Dashboard extends CI_Controller {
         $this->load->model('flights_model');
         $orderDetails = $this->flightorders_model->as_array()->where('userid',$user->id)->get_all();
 
-        if(count($orderDetails) > 1) {
+
+        if(is_array($orderDetails) == true && count($orderDetails) > 0) {
             foreach ($orderDetails as $key => $value) {
-//            $id = $value['id'];
                 $orderDetails[$key]['departure_flight_details'] = $this->flights_model->with_source()->with_destination()->as_array()->get($value['departure_flight']);
                 $orderDetails[$key]['return_flight_details'] = $this->flights_model->with_source()->with_destination()->as_array()->get($value['return_flight']);
 
             }
         }
-
-//        echo "<pre>"; print_r($orderDetails); exit;
 
         $data['orders'] = $orderDetails;
         $this->load->view('include/header');
@@ -55,10 +53,7 @@ class Dashboard extends CI_Controller {
         $this->load->model('hotels_model');
         $orderDetails = $this->hotelorders_model->as_array()->where('userid',$user->id)->get_all();
 
-        //                    echo "<pre>"; print_r($orderDetails); exit;
-
-
-        if(count($orderDetails) > 1){
+        if(is_array($orderDetails) == true && count($orderDetails) > 0){
             foreach ($orderDetails as $key => $value){
                 $orderDetails[$key]['hotelDetails'] = $this->hotels_model->as_array()->get($value['hotel_id']);
             }

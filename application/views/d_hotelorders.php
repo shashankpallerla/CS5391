@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-10">
             <div class="row">
-                <?php if(isset($orders) && count($orders) > 1){ ?>
+                <?php if(isset($orders) && is_array($orders) == true && count($orders) > 0){ ?>
 
                     <table id="myFlights">
                         <thead>
