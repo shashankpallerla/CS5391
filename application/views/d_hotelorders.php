@@ -30,7 +30,7 @@
                                 <td><?php echo $order['id'] ?> </td>
                                 <td><?php echo $order['hotelDetails']['name'] ?> </td>
                                 <td><?php echo $order['checkin_date'] ?></td>
-                                <td><?php echo $order['checkin_date'] ?> </td>
+                                <td><?php echo $order['checkout_date'] ?> </td>
                                 <td><?php echo $order['no_rooms'] ?> </td>
                                 <td><?php echo $order['no_people'] ?> </td>
                                 <td><?php echo $order['totalamount'] ?> USD</td>

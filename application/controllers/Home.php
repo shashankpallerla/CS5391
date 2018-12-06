@@ -95,9 +95,15 @@ class Home extends CI_Controller {
 
             $hotelDetails = $this->hotels_model->get($inputs['hotelid']);
 
-//            echo "<pre>"; print_r($hotelDetails); exit;
+//            echo "<pre>"; print_r($inputs); exit;
 
-            $amount = $inputs['no_rooms'] * $hotelDetails->cost;
+
+            $checkin = strtotime($inputs['checkin_date']); // or your date as well
+            $checkout = strtotime($inputs['checkout_date']); // or your date as well
+            $days = $checkout - $checkin;
+            $days = round($days / (60 * 60 * 24));
+
+            $amount = $inputs['no_rooms'] * $hotelDetails->cost * $days;
             $fee = $amount * HOTELS_FEE;
             $totalamount = $amount + $fee;
 
